@@ -1,0 +1,104 @@
+
+<!DOCTYPE HTML>
+
+<HTML lang="en">
+<HEAD><TITLE>360 3D Experiment</TITLE>
+<META NAME="AUTHOR" CONTENT="Derek Stillingfleet">
+<META NAME="viewport" CONTENT="width=device-width, initial-scale=1">
+<META http-equiv="Content-Type" content="text/html;charset=utf-8">
+<LINK rel="shortcut icon" href="https://www.virtualmountains.co.uk/favicon.ico">
+
+<link rel="stylesheet" href="pannellum.css"/> 
+<script type="text/javascript" src="pannellum.js"></script>
+ 
+<STYLE>
+
+    #panoramaA {position:absolute; width:50%; height:100%; top:0; left:0; z-index:20;}
+	#panoramaB {position:absolute; width:50%; height:100%; top:0; left:50%; z-index:20;}
+	#panoramaC {position:absolute; width:50%; height:100%; top:0; left:0; z-index:10;}
+	#panoramaD {position:absolute; width:50%; height:100%; top:0; left:50%; z-index:10;}
+	#OverTheTop {position:absolute; width:100%; height:100%; top:0; left:0; z-index:30;}
+</STYLE>
+
+<script>
+
+var ActualYaw=0;
+var ActualHFOV=0;
+var LastTop="";
+
+function PanoImageController()
+{
+
+ActualYaw = Math.round(PanoramaA.getYaw());
+ActualHFOV = Math.round(PanoramaA.getHfov());
+
+if (ActualYaw > -1 && ActualYaw < 90 && LastTop!="D")
+	{
+	document.getElementById('panoramaD').style.zIndex="20";
+	document.getElementById('panoramaD').style.left="0%";
+	document.getElementById('panoramaA').style.zIndex="20";
+	document.getElementById('panoramaA').style.left="50%";
+	document.getElementById('panoramaB').style.zIndex="10";
+	document.getElementById('panoramaC').style.zIndex="10";
+	LastTop="D";
+	}
+	
+if (ActualYaw > 90 && ActualYaw < 180 && LastTop!="A")
+	{
+	document.getElementById('panoramaA').style.zIndex="20";
+	document.getElementById('panoramaA').style.left="0%";
+	document.getElementById('panoramaB').style.zIndex="20";
+	document.getElementById('panoramaB').style.left="50%";	
+	document.getElementById('panoramaC').style.zIndex="10";
+	document.getElementById('panoramaD').style.zIndex="10";
+	LastTop="A";
+	}
+
+if (ActualYaw > -180 && ActualYaw < -90 && LastTop!="B")
+	{
+	document.getElementById('panoramaB').style.zIndex="20";
+	document.getElementById('panoramaB').style.left="0%";
+	document.getElementById('panoramaC').style.zIndex="20";
+	document.getElementById('panoramaC').style.left="50%";	
+	document.getElementById('panoramaA').style.zIndex="10";
+	document.getElementById('panoramaD').style.zIndex="10";
+	LastTop="B";
+	}
+	
+if  (ActualYaw > -90 && ActualYaw < 0 && LastTop!="C")
+	{
+	document.getElementById('panoramaC').style.zIndex="20";
+	document.getElementById('panoramaC').style.left="0%";
+	document.getElementById('panoramaD').style.zIndex="20";
+	document.getElementById('panoramaD').style.left="50%";	
+	document.getElementById('panoramaA').style.zIndex="10";
+	document.getElementById('panoramaB').style.zIndex="10";
+	LastTop="C";
+	}
+	
+var repeatPanoImageController=setTimeout(PanoImageController, 500)
+
+}
+
+</script>
+
+</HEAD>
+
+<BODY onload="PanoImageController()">
+
+	<div id="panoramaA"></div>
+	<div id="panoramaB"></div>
+	<div id="panoramaC"></div>
+	<div id="panoramaD"></div>
+	<div id="OverTheTop"><div>
+
+<script>
+		PanoramaA = pannellum.viewer('panoramaA', {"type": "equirectangular","panorama": "Church_HDR_x4_000.jpg","autoLoad": true,"orientationOnByDefault":true,"yaw":0,"showControls":false});
+		PanoramaB = pannellum.viewer('panoramaB', {"type": "equirectangular","panorama": "Church_HDR_x4_090.jpg","autoLoad": true,"orientationOnByDefault":true,"yaw":0,"showControls":false});
+		PanoramaC = pannellum.viewer('panoramaC', {"type": "equirectangular","panorama": "Church_HDR_x4_180.jpg","autoLoad": true,"orientationOnByDefault":true,"yaw":0,"showControls":false});
+		PanoramaD = pannellum.viewer('panoramaD', {"type": "equirectangular","panorama": "Church_HDR_x4_270.jpg","autoLoad": true,"orientationOnByDefault":true,"yaw":0,"showControls":false});
+</script>
+
+
+</BODY>
+</HTML>
